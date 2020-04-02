@@ -1,6 +1,7 @@
 import 'dart:convert';
 
-import 'global.dart';
+import '../global.dart';
+
 
 class MyApi {
   Future<List<User>> getUsers() async {
@@ -8,6 +9,13 @@ class MyApi {
         await client.get('https://jsonplaceholder.typicode.com/users');
     var list = json.decode(response.body) as List;
     return list.map((item) => User.fromJson(item)).toList();
+  }
+
+  Future<List<UserPost>> getUserPosts(String userId) async {
+    var response = await client
+        .get('https://jsonplaceholder.typicode.com/posts?userId=$userId');
+    var list = json.decode(response.body) as List;
+    return list.map((item) => UserPost.fromJson(item)).toList();
   }
 }
 
@@ -129,6 +137,31 @@ class Company {
     data['name'] = this.name;
     data['catchPhrase'] = this.catchPhrase;
     data['bs'] = this.bs;
+    return data;
+  }
+}
+
+class UserPost {
+  int userId;
+  int id;
+  String title;
+  String body;
+
+  UserPost({this.userId, this.id, this.title, this.body});
+
+  UserPost.fromJson(Map<String, dynamic> json) {
+    userId = json['userId'];
+    id = json['id'];
+    title = json['title'];
+    body = json['body'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['userId'] = this.userId;
+    data['id'] = this.id;
+    data['title'] = this.title;
+    data['body'] = this.body;
     return data;
   }
 }
