@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mvc/audio_player/audio_sample_screen.dart';
 import 'package:mvc/user/user_posts_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -50,6 +51,14 @@ class _MyHomePageState extends State<MyHomePage> {
             },
             value: _darkTheme,
           ),
+          IconButton(
+            icon: Icon(Icons.play_circle_filled),
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => AudioPlayPage(),
+              ),
+            ),
+          )
         ],
       ),
       body: _isLoading
